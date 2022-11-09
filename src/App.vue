@@ -7,6 +7,9 @@
       <div>Last Selection: <strong>{{ selected?.name || LastSelected?.name }}</strong></div>
     </div>
     <section>
+        <b-message type="is-danger" v-if="error">
+            {{ error }}
+        </b-message>
         <b-field label="Find Vue.js based Github repositories">
             <b-autocomplete
                 :data="data"
@@ -70,7 +73,8 @@ export default {
       previousSearch: '',
       isDurty: false,
       page: 1,
-      isDebug: true
+      isDebug: true,
+      error: false
     }
   },
   methods: {
@@ -79,10 +83,10 @@ export default {
         this.data = []
         return
       }
-      const octokit = new Octokit({
-        auth: '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'
-      })
       try {
+        const octokit = new Octokit({
+          auth: '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'
+        })
         this.isFetching = true
         const response = await octokit.request(`GET /search/repositories?page=${this.page}&per_page=10`, {
           q: `${name} in:file language:vue`,
@@ -97,6 +101,7 @@ export default {
       } catch (error) {
         this.isFetching = false
         this.data = []
+        this.error = error
         throw error
       } finally {
         this.isFetching = false
