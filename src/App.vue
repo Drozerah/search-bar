@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="container">
     <div class="debug" v-if="isDurty && isDebug">
-      <div>Current Search Results: <strong>{{ data.length }}</strong></div>
-      <div>Last Selection: <strong>{{ selected?.name || LastSelected?.name }}</strong></div>
       <div>Search Term: <strong>{{ previousSearch }}</strong></div>
+      <div>Search Results: <strong>{{ data.length }}</strong></div>
       <div>Selected Items Number: <strong>{{ selection.length }}</strong></div>
+      <div>Last Selection: <strong>{{ selected?.name || LastSelected?.name }}</strong></div>
     </div>
     <section>
         <b-field label="Find Vue.js based Github repositories">
@@ -32,7 +32,6 @@
                     <a @click="paginate()"><span>Add more results for <strong>'{{ previousSearch }}'</strong></span></a>
                   </div>
                 </template>
-                <template #empty>No results found</template>
             </b-autocomplete>
         </b-field>
         <div  class="cards">
@@ -132,6 +131,9 @@ export default {
   }
   .info{
     text-align: center;
+  }
+  .label{
+    font-size: 1.5rem;
   }
   .debug{
     position: fixed;
